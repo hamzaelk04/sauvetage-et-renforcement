@@ -31,5 +31,5 @@ Object.keys(contact).forEach(p => {
 
 // Parcours avec Object.entries() et affiche sous forme de phrases
 Object.entries(contact).forEach(([key, value]) => {
-    console.log(`Le cle: ${key}, et la valeur ${value}`);
+    console.log(`Le cle: ${key}, et la valeur ${value}`); 
 })
