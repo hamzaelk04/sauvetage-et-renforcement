@@ -1,5 +1,6 @@
 let users = [];
-let id = 0;
+let annonces = [];
+let id_user = 0;
 let id_annonce = 0;
 
 function menu() {
@@ -7,6 +8,7 @@ function menu() {
     while (running) {
         let choice = Number(prompt(`1. Ajouter un utilisateur\n
         2.Afficher les utilisateurs\n
+        3.Publier une annonce\n
         0.Quit`));
         switch (choice) {
             case 1:
@@ -19,7 +21,7 @@ function menu() {
                 })
                 break;
             case 3:
-                
+                checkSeller();
                 break;
             case 0:
                 running = false;
@@ -31,29 +33,83 @@ function menu() {
     }
 }
 
-menu()
+menu();
 
 function createUser() {
     let user = {}
 
-    user.id = ++id
+    user.id = ++id_user
     user.pseudo = prompt('Donnez le pseudo: ');
     user.email = prompt('Donnez le email: ');
-    let role = prompt('Donnez le role: ');
-    while (role !== 'vendeur' && role !== 'acheteur') {
+    user.role = prompt('Donnez le role: ');
+    while (user.role !== 'vendeur' && user.role !== 'acheteur') {
         alert("le role doit etre (vendeur/acheteur)");
-        role = prompt('Donnez le role: ');
+        user.role = prompt('Donnez le role: ');
     }
-    user.role = role;
     user.note = prompt('Donnez le note: ');
     user.solde = prompt('Donnez le solde: ');
 
     return user;
 }
 
-function CreateAnnonce() {
+function menuAnnonce(id) {
+    let running = true;
+    while (running) {
+        let choice = Number(prompt(`1. Publier une annonce\n
+        2.Consulter les annonces\n
+        3.Modifier le prix d'une annonce\n
+        4.Retirer une annonce\n
+        0.Quit`));
+
+        switch (choice) {
+            case 1:
+                let annonce = CreateAnnonce(id);
+                annonces.push(annonce);
+                break;
+            case 2:
+                annonces.forEach(an => {
+                    console.log(an);
+                });
+                break;
+            case 0:
+                running = false;
+                break;
+            default:
+                alert('choix invalide');
+                break;
+        }
+    }
+}
+
+function checkSeller() {
+    let vendeur_id = prompt("Donnez l'id du vendeur: ");
+
+    let newUser = users.find(user => user.id == vendeur_id);
+
+    if (newUser != undefined) {
+        if (newUser.role === 'vendeur') {
+            menuAnnonce(vendeur_id);
+        } else {
+            alert("L'acheteur ne peut pas publier une annonce");
+        }
+    } else {
+        alert("Ce id n'existe pas");
+    }
+}
+
+function CreateAnnonce(vendeur_id) {
     let annonce = {};
 
-    annonce.id = ++id;
-    annonce.vendeur_id = prompt("Donnez l'id du vendeur: ");
+    annonce.id = ++id_annonce;
+
+    annonce.vendeur_id = vendeur_id;
+    annonce.titre = prompt("Donnez le titre d'annonce: ");
+    annonce.description = prompt("Donnez le description d'annonce: ");
+    annonce.prix = prompt("Donnez le prix d'annonce: ");
+    annonce.categorie = prompt("Donnez le categorie d'annonce: ");
+    annonce.etat = prompt("Donnez le etat d'annonce: ");
+    annonce.statut = prompt("Donnez le statut d'annonce: ");
+    annonce.date_publication = prompt("Donnez la date_publication d'annonce: ");
+
+    return annonce;
 }
