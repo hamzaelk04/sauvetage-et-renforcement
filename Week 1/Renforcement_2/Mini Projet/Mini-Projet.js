@@ -74,6 +74,9 @@ function menuAnnonce(id) {
             case 3:
                 updatePriceAnnonce()
                 break;
+            case 4:
+                deleteAnnonce();
+                break;
             case 0:
                 running = false;
                 break;
@@ -130,5 +133,19 @@ function updatePriceAnnonce() {
         annonces[index].prix = price;
 
         console.log(annonces[index]);
+    }
+}
+
+function deleteAnnonce() {
+    let id = prompt("DOnnez l'id d'annonce");
+
+    let index = annonces.findIndex(annonce => annonce.id == id);
+
+    if (index == -1) {
+        return alert("ce Id n'existe pas");
+    } else {
+        annonces.splice(index, 1);
+
+        alert("annonce deleted");
     }
 }
