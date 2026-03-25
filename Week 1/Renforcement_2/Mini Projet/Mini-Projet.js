@@ -9,6 +9,7 @@ function menu() {
         let choice = Number(prompt(`1. Ajouter un utilisateur\n
         2.Afficher les utilisateurs\n
         3.Publier une annonce\n
+        4.Recherche sur une annonce\n
         0.Quit`));
         switch (choice) {
             case 1:
@@ -22,6 +23,9 @@ function menu() {
                 break;
             case 3:
                 checkSeller();
+                break;
+            case 4:
+                searchMenu()
                 break;
             case 0:
                 running = false;
@@ -147,5 +151,25 @@ function deleteAnnonce() {
         annonces.splice(index, 1);
 
         alert("annonce deleted");
+    }
+}
+
+function searchMenu() {
+    let running = true;
+    while (running) {
+        let choice = Number(prompt(`1. Recherche par mot-clé\n
+        2.Recherche par catégorie\n
+        3.Recherche par prix\n
+        4.Recherche par \n
+        5.Recherche par \n
+        0.Quit`));
+        switch (choice) {
+            case 0:
+                running = false
+                break;
+        
+            default:
+                break;
+        }
     }
 }
