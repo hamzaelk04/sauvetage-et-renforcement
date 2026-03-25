@@ -71,6 +71,9 @@ function menuAnnonce(id) {
                     console.log(an);
                 });
                 break;
+            case 3:
+                updatePriceAnnonce()
+                break;
             case 0:
                 running = false;
                 break;
@@ -112,4 +115,20 @@ function CreateAnnonce(vendeur_id) {
     annonce.date_publication = prompt("Donnez la date_publication d'annonce: ");
 
     return annonce;
+}
+
+function updatePriceAnnonce() {
+    let id = prompt("DOnnez l'id d'annonce");
+
+    let index = annonces.findIndex(annonce => annonce.id == id);
+
+    if (index == -1) {
+        return alert("ce Id n'existe pas");
+    } else {
+        let price = Number(prompt("Donnez le nouveau prix d'annonce"));
+
+        annonces[index].prix = price;
+
+        console.log(annonces[index]);
+    }
 }
