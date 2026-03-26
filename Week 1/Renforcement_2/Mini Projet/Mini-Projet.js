@@ -158,18 +158,35 @@ function searchMenu() {
     let running = true;
     while (running) {
         let choice = Number(prompt(`1. Recherche par mot-clé\n
-        2.Recherche par catégorie\n
-        3.Recherche par prix\n
-        4.Recherche par \n
-        5.Recherche par \n
+        3.filtrer\n
         0.Quit`));
         switch (choice) {
+            case 1:
+                let key = prompt('search');
+                let results = searchByKeyWord(key);
+                if (results.length > 0) {
+                    results.forEach(result => {
+                        console.log("le titre " + result.titre + "le prix: " + result.prix);
+                    });
+                } else {
+                    alert("les resultats non trouves")
+                }
+
+                break;
             case 0:
                 running = false
                 break;
-        
+
             default:
                 break;
         }
     }
+}
+
+function searchByKeyWord(key) {
+    let titles = annonces.filter(n => n.titre === key)
+    let descriptions = annoncds.filter(n => n.description === key)
+
+    let searched = titles.concat(descriptions);
+    return searched;
 }
