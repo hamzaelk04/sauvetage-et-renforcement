@@ -173,6 +173,22 @@ function searchMenu() {
                 }
 
                 break;
+            case 2:
+                let categorie = prompt("Donne la categorie:");
+                let max = prompt("Donne le max prix:");
+                let min = prompt("Donne le min prix:");
+                let etat = prompt("Donne l'etat:");
+                
+                let filtred = filter(categorie, max, min, etat);
+
+                if (filtred.length > 0) {
+                    filtred.forEach(item => {
+                        console.log("le titre " + item.titre + "le prix: " + item.prix);   
+                    })
+                } else {
+                    alert("les resultats non trouves")
+                }
+                break;
             case 0:
                 running = false
                 break;
@@ -189,4 +205,15 @@ function searchByKeyWord(key) {
 
     let searched = titles.concat(descriptions);
     return searched;
+}
+
+function filter(categorie, max, min, etat) {
+    let filtred = annonces.filter(annonce => 
+        annonce.categorie === categorie || !categorie &&
+        annonce.prix <= max || !max &&
+        annonce.prix >= min || !min &&
+        annonce.etat === etat || !etat
+    );
+
+    return filtred
 }
