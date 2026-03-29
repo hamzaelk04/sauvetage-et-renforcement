@@ -158,7 +158,8 @@ function searchMenu() {
     let running = true;
     while (running) {
         let choice = Number(prompt(`1. Recherche par mot-clé\n
-        3.filtrer\n
+        2.filtrer\n
+        3. Tri
         0.Quit`));
         switch (choice) {
             case 1:
@@ -216,4 +217,38 @@ function filter(categorie, max, min, etat) {
     );
 
     return filtred
+}
+
+function acheterAnnonce(acheteur, annonce, historique) {
+    if (annonce.statut !== "disponible") {
+        return "Annonce non disponible";
+    }
+
+    if (acheteur.solde < annonce.prix) {
+        return "Solde insuffisant";
+    }
+
+    const vendeur = annonce.vendeur;
+    const prix = annonce.prix;
+    const commission = prix * 0.05;
+    const montantVendeur = prix - commission;
+
+    acheteur.solde -= prix;
+    vendeur.solde += montantVendeur;
+
+    annonce.statut = "vendu";
+
+    const transaction = {
+        id: Date.now(),
+        date: new Date(),
+        acheteur: acheteur.pseudo,
+        vendeur: vendeur.pseudo,
+        annonce: annonce.titre,
+        montant: prix,
+        commission: commission
+    };
+
+    historique.push(transaction);
+
+    return "Achat effectué avec succès";
 }
