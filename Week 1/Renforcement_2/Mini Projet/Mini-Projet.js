@@ -252,3 +252,53 @@ function acheterAnnonce(acheteur, annonce, historique) {
 
     return "Achat effectué avec succès";
 }
+
+function ajouterAvis(acheteur, vendeur, transactionId, note, commentaire, avisList) {
+    const existe = avisList.find(a => a.transactionId === transactionId);
+
+    if (existe) {
+        return "Avis déjà donné pour cette transaction";
+    }
+
+    const avis = {
+        transactionId,
+        acheteur: acheteur.pseudo,
+        vendeur: vendeur.pseudo,
+        note,
+        commentaire
+    };
+
+    avisList.push(avis);
+
+    recalculerNoteMoyenne(vendeur, avisList);
+
+    return "Avis ajouté";
+}
+
+function recalculerNoteMoyenne(vendeur, avisList) {
+    const notes = avisList
+        .filter(a => a.vendeur === vendeur.pseudo)
+        .map(a => a.note);
+
+    if (notes.length > 0) {
+        vendeur.noteMoyenne =
+            notes.reduce((sum, n) => sum + n, 0) / notes.length;
+    } else {
+        vendeur.noteMoyenne = 0;
+    }
+}
+
+function afficherProfilVendeur(vendeur, annonces, avisList) {
+    const ventes = annonces.filter(a =>
+        a.vendeur.pseudo === vendeur.pseudo && a.statut === "vendu"
+    );
+
+    const avis = avisList.filter(a => a.vendeur === vendeur.pseudo);
+
+    return {
+        pseudo: vendeur.pseudo,
+        noteMoyenne: vendeur.noteMoyenne || 0,
+        nombreVentes: ventes.length,
+        avis: avis
+    };
+}
