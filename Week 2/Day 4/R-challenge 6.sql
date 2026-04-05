@@ -12,3 +12,9 @@ JOIN livres l ON e.id = l.editeur_id
 GROUP BY e.nom
 ORDER BY nb_livre DESC
 
+-- Le chiffre d'affaires par genre (jointure 3 tables avec calcul prix × quantité)
+SELECT g.nom, SUM(l.prix * v.quantite)
+FROM genres g
+JOIN livres l ON l.genre_id = g.id
+JOIN ventes v ON l.id = v.livre_id
+GROUP BY g.nom
