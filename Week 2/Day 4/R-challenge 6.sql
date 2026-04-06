@@ -26,3 +26,12 @@ JOIN livres l ON e.id = l.editeur_id
 LEFT JOIN ventes v ON v.livre_id = l.id
 WHERE v.id IS NULL
 GROUP BY e.nom
+-- je ne sais pas
+
+-- Le livre le plus vendu de chaque genre
+SELECT l.titre, SUM(v.quantite) AS vente
+FROM livres
+JOIN genres g ON g.id = l.genre_id
+JOIN ventes v ON v.livre_id = l.id
+GROUP BY l.titre, g.nom
+ORDER BY vente DESC limit 1
