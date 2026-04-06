@@ -18,3 +18,11 @@ FROM genres g
 JOIN livres l ON l.genre_id = g.id
 JOIN ventes v ON l.id = v.livre_id
 GROUP BY g.nom
+
+-- Les éditeurs qui n'ont aucun livre vendu (pense à comment trouver l'absence de correspondance)
+SELECT e.nom 
+FROM editeurs e
+JOIN livres l ON e.id = l.editeur_id
+LEFT JOIN ventes v ON v.livre_id = l.id
+WHERE v.id IS NULL
+GROUP BY e.nom
